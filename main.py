@@ -45,7 +45,7 @@ def play_round():
     cpu = get_cpu_choice()
     player = get_player_choice()
 
-    print(f"\nCPU chose: {cpu}")
+    print(f"CPU chose: {cpu}")
     print(f"You chose: {player}")
 
     winner = check_winner(cpu, player)
@@ -81,9 +81,9 @@ def start_tournament():
 
     # Display the overall winner
     if player_wins == 3:
-        print("\n🏆 OVERALL WINNER: PLAYER! Congratulations! 🏆")
+        print(" OVERALL WINNER: PLAYER! Congratulations! ")
     else:
-        print("\n🤖 OVERALL WINNER: CPU! Better luck next time. 🤖")
+        print(" OVERALL WINNER: CPU! Better luck next time. ")
 
 
 # Execute the program
