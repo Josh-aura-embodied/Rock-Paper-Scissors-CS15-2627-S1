@@ -1,91 +1,66 @@
+#STILL WORKING ON IT NEEDS TO BE REDONE
 import random
 
 
 def get_cpu_choice():
-    """Generates a random choice for the CPU."""
-    choices = ["rock", "paper", "scissors"]
-    return random.choice(choices)
+    return random.choice(["rock", "paper", "scissors"])
 
 
 def get_player_choice():
-    """Prompts the user for a choice and validates the input."""
-    valid_choices = ["rock", "paper", "scissors"]
     while True:
-        # Using .lower() to handle cases like "Rock" or "ROCK"
-        choice = input("Enter rock, paper, or scissors: ").strip().lower()
-        if choice in valid_choices:
+        choice = input("Rock, paper, or scissors? ").strip().lower()
+        if choice in ["rock", "paper", "scissors"]:
             return choice
-        print("Invalid input. Please try again.")
+        print("Nah, pick rock, paper, or scissors.")
 
 
-def check_winner(cpu_choice, player_choice):
-    """Determines the winner of a single round."""
-    if player_choice == cpu_choice:
-        return "TIE"
+def determine_winner(player, cpu):
+    if player == cpu:
+        return "tie"
 
-    if cpu_choice == "rock":
-        if player_choice == "paper":
-            return "PLAYER"
+    wins = {
+        "rock": "scissors",
+        "paper": "rock",
+        "scissors": "paper",
+    }
+
+    return "player" if wins[player] == cpu else "cpu"
+
+
+def start_game():
+    player_score = 0
+    cpu_score = 0
+
+    print("Welcome to Josh's Rock, Paper, Scissors game.")
+    print("First to 3 wins takes it.")
+    print()
+
+    while player_score < 3 and cpu_score < 3:
+        cpu = get_cpu_choice()
+        player = get_player_choice()
+
+        print(f"Computer: {cpu}")
+        print(f"You: {player}")
+
+        winner = determine_winner(player, cpu)
+
+        if winner == "player":
+            player_score += 1
+            print("You took that round.")
+        elif winner == "cpu":
+            cpu_score += 1
+            print("Computer took that round.")
         else:
-            return "CPU"
-    elif cpu_choice == "paper":
-        if player_choice == "scissors":
-            return "PLAYER"
-        else:
-            return "CPU"
-    elif cpu_choice == "scissors":
-        if player_choice == "rock":
-            return "PLAYER"
-        else:
-            return "CPU"
+            print("Tie round.")
 
+        print(f"Score - You: {player_score} | Computer: {cpu_score}")
+        print()
 
-def play_round():
-    """Executes a single complete round and returns the winner."""
-    cpu = get_cpu_choice()
-    player = get_player_choice()
-
-    print(f"CPU chose: {cpu}")
-    print(f"You chose: {player}")
-
-    winner = check_winner(cpu, player)
-    return winner
-
-
-def start_tournament():
-    """Runs a Best-of-5 tournament (first to 3 wins)."""
-    player_wins = 0
-    cpu_wins = 0
-    ties = 0
-
-    print("=== Welcome to the goat Josh's Rock, Paper, Scissors Tournament! ===")
-    print("First to 3 wins takes the crown.\n")
-
-    # Loop continues until either the player or CPU reaches 3 wins
-    while player_wins < 3 and cpu_wins < 3:
-        winner = play_round()
-
-        if winner == "PLAYER":
-            print("Result: You win this round!")
-            player_wins += 1
-        elif winner == "CPU":
-            print("Result: CPU wins this round!")
-            cpu_wins += 1
-        else:
-            print("Result: It's a tie!")
-            ties += 1
-
-        # Display current score after every round
-        print(f"Current Score -> Player: {player_wins} | CPU: {cpu_wins} | Ties: {ties}\n")
-        print("-" * 40)
-
-    # Display the overall winner
-    if player_wins == 3:
-        print(" OVERALL WINNER: PLAYER! Congratulations! ")
+    if player_score == 3:
+        print("Game over, you won the set.")
     else:
-        print(" OVERALL WINNER: CPU! Better luck next time. ")
+        print("Game over, computer took the set.")
 
 
-# Execute the program
 if __name__ == "__main__":
-    start_tournament()
+    start_game()
